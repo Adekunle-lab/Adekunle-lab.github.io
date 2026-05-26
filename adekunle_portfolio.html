@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adekunle Salako — AI Trainer & Prompt Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #0e7c7b;
+    --teal-light: #14a8a7;
+    --teal-pale: #e6f5f5;
+    --ink: #0f1923;
+    --ink-mid: #3a4a57;
+    --ink-light: #6b7f8e;
+    --cream: #f8f5f0;
+    --white: #ffffff;
+    --accent: #c8531a;
+    --border: #dde4e8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(248,245,240,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.25rem;
+    color: var(--teal);
+    letter-spacing: -0.02em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.85rem; font-weight: 500; color: var(--ink-mid);
+    text-decoration: none; letter-spacing: 0.04em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--teal); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 3rem 4rem;
+    gap: 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .hero-text { animation: fadeUp 0.8s ease both; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--teal-pale); color: var(--teal);
+    padding: 0.4rem 1rem; border-radius: 100px;
+    font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; margin-bottom: 1.5rem;
+  }
+  .hero-tag::before {
+    content: ''; width: 6px; height: 6px;
+    background: var(--teal); border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50% { opacity:0.5; transform:scale(1.4); }
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    line-height: 1.05;
+    color: var(--ink);
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em {
+    font-style: italic; color: var(--teal);
+  }
+  .hero-sub {
+    font-size: 1.05rem; color: var(--ink-mid); line-height: 1.7;
+    max-width: 480px; margin-bottom: 2.5rem;
+  }
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--teal); color: white;
+    padding: 0.85rem 2rem; border-radius: 8px;
+    font-weight: 600; font-size: 0.9rem;
+    text-decoration: none; letter-spacing: 0.02em;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--teal-light); transform: translateY(-1px); }
+  .btn-secondary {
+    border: 1.5px solid var(--border); color: var(--ink-mid);
+    padding: 0.85rem 2rem; border-radius: 8px;
+    font-weight: 500; font-size: 0.9rem;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+    display: inline-block;
+  }
+  .btn-secondary:hover { border-color: var(--teal); color: var(--teal); }
+
+  .hero-stats {
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+  .stats-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  }
+  .stat-card {
+    background: white; border: 1px solid var(--border);
+    border-radius: 16px; padding: 1.8rem;
+    position: relative; overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .stat-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(14,124,123,0.1); }
+  .stat-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--teal);
+  }
+  .stat-card:nth-child(2)::before { background: var(--accent); }
+  .stat-card:nth-child(3)::before { background: #7c3aed; }
+  .stat-card:nth-child(4)::before { background: #0369a1; }
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.8rem; color: var(--ink); line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .stat-label { font-size: 0.82rem; color: var(--ink-light); font-weight: 500; line-height: 1.4; }
+
+  /* SECTIONS */
+  section { padding: 6rem 3rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--teal);
+    margin-bottom: 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    color: var(--ink); line-height: 1.15;
+    letter-spacing: -0.02em; margin-bottom: 3rem;
+  }
+
+  /* ABOUT */
+  .about { background: white; }
+  .about-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: start; }
+  .about-left {}
+  .about-quote {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.35rem; line-height: 1.6;
+    color: var(--ink); font-style: italic;
+    border-left: 3px solid var(--teal);
+    padding-left: 1.5rem; margin-bottom: 2rem;
+  }
+  .about-body { font-size: 0.97rem; line-height: 1.8; color: var(--ink-mid); }
+  .about-body p + p { margin-top: 1rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; }
+  .tag {
+    background: var(--teal-pale); color: var(--teal);
+    padding: 0.4rem 0.9rem; border-radius: 100px;
+    font-size: 0.8rem; font-weight: 600;
+  }
+
+  /* EXPERIENCE */
+  .experience { background: var(--cream); }
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: ''; position: absolute; left: 0; top: 0.5rem; bottom: 0;
+    width: 2px; background: linear-gradient(to bottom, var(--teal), transparent);
+  }
+  .timeline-item {
+    position: relative; margin-bottom: 3rem;
+    padding-bottom: 3rem; border-bottom: 1px solid var(--border);
+  }
+  .timeline-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .timeline-item::before {
+    content: ''; position: absolute; left: -2.35rem; top: 0.35rem;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--teal); border: 2.5px solid var(--cream);
+    box-shadow: 0 0 0 3px rgba(14,124,123,0.2);
+  }
+  .job-meta {
+    display: flex; align-items: flex-start;
+    justify-content: space-between; gap: 1rem;
+    flex-wrap: wrap; margin-bottom: 0.5rem;
+  }
+  .job-title { font-weight: 700; font-size: 1.1rem; color: var(--ink); }
+  .job-company { color: var(--teal); font-weight: 600; font-size: 0.9rem; margin-bottom: 0.75rem; }
+  .job-dates {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem; color: var(--ink-light);
+    background: var(--teal-pale); padding: 0.3rem 0.8rem;
+    border-radius: 100px; white-space: nowrap;
+  }
+  .job-bullets { list-style: none; }
+  .job-bullets li {
+    font-size: 0.93rem; color: var(--ink-mid); line-height: 1.65;
+    padding: 0.3rem 0 0.3rem 1.2rem; position: relative;
+  }
+  .job-bullets li::before {
+    content: '→'; position: absolute; left: 0;
+    color: var(--teal); font-size: 0.8rem;
+  }
+
+  /* SHOWCASE */
+  .showcase { background: white; }
+  .showcase-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .showcase-card {
+    border: 1px solid var(--border); border-radius: 16px;
+    overflow: hidden; transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .showcase-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.08); }
+  .card-header {
+    padding: 1.8rem; background: var(--teal);
+    position: relative; overflow: hidden;
+  }
+  .card-header::after {
+    content: ''; position: absolute; bottom: -20px; right: -20px;
+    width: 80px; height: 80px; border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+  }
+  .card-header:nth-child(1) { background: var(--teal); }
+  .showcase-card:nth-child(2) .card-header { background: #c8531a; }
+  .showcase-card:nth-child(3) .card-header { background: #0369a1; }
+  .card-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+  .card-type {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(255,255,255,0.7);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .card-title { font-weight: 700; color: white; font-size: 1.05rem; margin-top: 0.3rem; }
+  .card-body { padding: 1.5rem; background: white; }
+  .card-desc { font-size: 0.88rem; color: var(--ink-mid); line-height: 1.65; margin-bottom: 1rem; }
+  .card-metrics { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .metric {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; color: var(--teal); font-weight: 600;
+    background: var(--teal-pale); padding: 0.25rem 0.6rem; border-radius: 4px;
+  }
+
+  /* CONTACT */
+  .contact {
+    background: var(--ink);
+    color: white;
+  }
+  .contact .section-label { color: var(--teal-light); }
+  .contact .section-title { color: white; }
+  .contact-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 5rem; align-items: start; }
+  .contact-info { font-size: 0.97rem; color: rgba(255,255,255,0.65); line-height: 1.8; margin-bottom: 2.5rem; }
+  .contact-items { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-item {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.5rem; background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;
+    color: white; text-decoration: none; font-size: 0.9rem;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .contact-item:hover { background: rgba(14,124,123,0.2); border-color: var(--teal); }
+  .contact-icon { font-size: 1.1rem; }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group label { font-size: 0.8rem; font-weight: 600; color: rgba(255,255,255,0.5); letter-spacing: 0.05em; text-transform: uppercase; }
+  .form-group input, .form-group textarea {
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px; padding: 0.85rem 1rem;
+    color: white; font-family: 'DM Sans', sans-serif; font-size: 0.92rem;
+    transition: border-color 0.2s, background 0.2s;
+    outline: none;
+  }
+  .form-group input:focus, .form-group textarea:focus {
+    border-color: var(--teal); background: rgba(14,124,123,0.1);
+  }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
+  .form-group textarea { resize: vertical; min-height: 110px; }
+  .btn-submit {
+    background: var(--teal); color: white; border: none;
+    padding: 1rem 2rem; border-radius: 8px; font-size: 0.9rem;
+    font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: background 0.2s, transform 0.15s; text-align: center;
+  }
+  .btn-submit:hover { background: var(--teal-light); transform: translateY(-1px); }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink); border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 2rem 3rem; text-align: center;
+    color: rgba(255,255,255,0.3); font-size: 0.82rem;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; gap: 2.5rem; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .showcase-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">A. Salako</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#work">Work Samples</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-text">
+    <div class="hero-tag">Available for AI Projects</div>
+    <h1>AI Trainer &amp;<br><em>Prompt Engineer</em></h1>
+    <p class="hero-sub">
+      I build better AI by crafting precise prompts, evaluating model outputs, and creating datasets that make language models smarter, safer, and more aligned with human intent.
+    </p>
+    <div class="hero-ctas">
+      <a href="#work" class="btn-primary">View Work Samples</a>
+      <a href="#contact" class="btn-secondary">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">3K+</div>
+        <div class="stat-label">Prompts Engineered for LLMs</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">98%+</div>
+        <div class="stat-label">Average Annotation Accuracy</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">20K+</div>
+        <div class="stat-label">Data Entries Annotated</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Years in AI Training & NLP</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-left">
+        <div class="section-label">// About Me</div>
+        <h2 class="section-title">Turning Human Intelligence into Better AI</h2>
+        <blockquote class="about-quote">"The best AI systems are built on clear thinking and precise human feedback — that's my craft."</blockquote>
+      </div>
+      <div class="about-right">
+        <div class="about-body">
+          <p>I'm Adekunle Salako, an AI Trainer and Prompt Engineer with 5+ years of experience helping AI companies build more capable, accurate, and human-aligned language models.</p>
+          <p>My work spans the full AI data pipeline — from designing evaluation frameworks and writing complex prompts, to annotating datasets and conducting side-by-side model comparisons. I've contributed to LLM fine-tuning projects at companies like Micro1 and TransPerfect, consistently delivering 98%+ accuracy under tight deadlines.</p>
+          <p>I specialize in identifying subtle model weaknesses, crafting prompts that expose edge cases, and writing training data that improves coherence, factuality, and instruction-following across diverse tasks.</p>
+        </div>
+        <div class="skill-tags">
+          <span class="tag">Prompt Engineering</span>
+          <span class="tag">LLM Evaluation</span>
+          <span class="tag">Data Annotation</span>
+          <span class="tag">RLHF / SxS Rating</span>
+          <span class="tag">NLP</span>
+          <span class="tag">Quality Assurance</span>
+          <span class="tag">Multilingual Datasets</span>
+          <span class="tag">Audio Transcription</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+  <div class="section-inner">
+    <div class="section-label">// Experience</div>
+    <h2 class="section-title">Where I've Made an Impact</h2>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="job-meta">
+          <div>
+            <div class="job-title">Senior AI Generalist</div>
+            <div class="job-company">Micro1</div>
+          </div>
+          <span class="job-dates">05/2025 – 10/2025</span>
+        </div>
+        <ul class="job-bullets">
+          <li>Led AI training, evaluation, and QA projects involving text, image, and audio data</li>
+          <li>Analyzed and optimized AI-generated outputs for accuracy, relevance, safety, and guideline compliance</li>
+          <li>Designed and refined prompts to improve LLM performance and response consistency</li>
+          <li>Managed high-volume annotation and data validation while maintaining strong accuracy metrics</li>
+          <li>Collaborated with cross-functional remote teams on AI model improvement and workflow optimization</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="job-meta">
+          <div>
+            <div class="job-title">Prompt and Scenario Writer</div>
+            <div class="job-company">TransPerfect</div>
+          </div>
+          <span class="job-dates">06/2024 – 09/2024</span>
+        </div>
+        <ul class="job-bullets">
+          <li>Designed 300+ nuanced scenarios simulating real-world interactions to enhance conversational AI adaptability</li>
+          <li>Crafted custom prompts targeting specific LLM needs, improving response relevance by 30%</li>
+          <li>Generated language-specific scenarios across multiple languages for multilingual LLM training</li>
+          <li>Continuously reviewed and refined prompts based on feedback to boost model alignment</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="job-meta">
+          <div>
+            <div class="job-title">Advanced AI Data Trainer</div>
+            <div class="job-company">Freelance</div>
+          </div>
+          <span class="job-dates">02/2023 – 04/2023</span>
+        </div>
+        <ul class="job-bullets">
+          <li>Developed and evaluated 3,000+ high-quality prompts for generative AI models</li>
+          <li>Conducted SxS and single-output ratings for 10+ enterprise-level LLM projects, improving accuracy by 25–30%</li>
+          <li>Maintained 98%+ quality score across large-scale evaluation batches</li>
+          <li>Contributed to instruction-tuned model datasets covering summarisation, knowledge grounding, and multilingual testing</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="job-meta">
+          <div>
+            <div class="job-title">AI Contributor</div>
+            <div class="job-company">TELUS International · CloudFactory</div>
+          </div>
+          <span class="job-dates">03/2019 – 01/2023</span>
+        </div>
+        <ul class="job-bullets">
+          <li>Annotated 20,000+ text/audio entries across sentiment, ABSA, and sarcasm detection projects</li>
+          <li>Transcribed 500+ hours of English audio with 98%+ time-aligned accuracy</li>
+          <li>Achieved 100% on-time delivery collaborating with international teams</li>
+          <li>Validated and reviewed annotations to ensure high dataset integrity for ML training</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WORK SAMPLES -->
+<section class="showcase" id="work">
+  <div class="section-inner">
+    <div class="section-label">// Work Samples</div>
+    <h2 class="section-title">What My Work Looks Like</h2>
+    <div class="showcase-grid">
+
+      <div class="showcase-card">
+        <div class="card-header">
+          <div class="card-icon">✍️</div>
+          <div class="card-type">Prompt Engineering</div>
+          <div class="card-title">Instruction-Following Prompts</div>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Designed multi-turn prompts testing an LLM's ability to follow complex, layered instructions — including edge cases like conflicting constraints, ambiguous wording, and multi-step reasoning chains.</p>
+          <div class="card-metrics">
+            <span class="metric">300+ prompts</span>
+            <span class="metric">Multilingual</span>
+            <span class="metric">Edge-case tested</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="showcase-card">
+        <div class="card-header">
+          <div class="card-icon">🎯</div>
+          <div class="card-type">Model Evaluation</div>
+          <div class="card-title">SxS Rating Framework</div>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Conducted side-by-side comparisons for enterprise LLM outputs, rating on coherence, factuality, safety, and instruction adherence. Contributed to improving model response accuracy by 25–30% across 10+ projects.</p>
+          <div class="card-metrics">
+            <span class="metric">10+ LLM projects</span>
+            <span class="metric">98%+ QA score</span>
+            <span class="metric">25–30% accuracy gain</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="showcase-card">
+        <div class="card-header">
+          <div class="card-icon">🗂️</div>
+          <div class="card-type">Data Annotation</div>
+          <div class="card-title">Sentiment & NLP Datasets</div>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">Annotated large-scale text and audio datasets for sentiment analysis, ABSA, and sarcasm detection. Created annotation guidelines and QA workflows to ensure dataset uniformity across distributed teams.</p>
+          <div class="card-metrics">
+            <span class="metric">20,000+ entries</span>
+            <span class="metric">500+ audio hrs</span>
+            <span class="metric">100% on-time</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div>
+        <div class="section-label">// Contact</div>
+        <h2 class="section-title">Let's Build Better AI Together</h2>
+        <p class="contact-info">Available for freelance AI training, prompt engineering, data annotation, and LLM evaluation projects. Remote-ready and experienced with international teams.</p>
+        <div class="contact-items">
+          <a href="mailto:adekunlesalako190@gmail.com" class="contact-item">
+            <span class="contact-icon">✉️</span>
+            adekunlesalako190@gmail.com
+          </a>
+          <a href="#" class="contact-item">
+            <span class="contact-icon">💼</span>
+            LinkedIn Profile
+          </a>
+          <a href="#" class="contact-item">
+            <span class="contact-icon">📄</span>
+            Download Resume
+          </a>
+        </div>
+      </div>
+      <div>
+        <div class="contact-form">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" placeholder="Jane Smith">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="jane@company.com">
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea placeholder="Tell me about your project..."></textarea>
+          </div>
+          <button class="btn-submit">Send Message →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Adekunle Salako · AI Trainer & Prompt Engineer · Built to showcase real AI work</p>
+</footer>
+
+</body>
+</html>
